@@ -1,12 +1,31 @@
 from pptx import Presentation
+import sys
+# REGEXXXXXX from re import 
 
-pA = Presentation('/Users/ian/Downloads/Study_Images__Set_A_.pptx')
-pB = Presentation('/Users/ian/Downloads/Study_Images__Set_B_.pptx')
-pC = Presentation('/Users/ian/Downloads/Study_Images__Set_C_.pptx')
-pD = Presentation('/Users/ian/Downloads/Study_Images__Set_D_.pptx')
-pE = Presentation('/Users/ian/Downloads/Study_Images__Set_E_.pptx')
-pF = Presentation('/Users/ian/Downloads/Study_Images__Set_F_.pptx')
-pG = Presentation('/Users/ian/Downloads/Study_Images__Set_G_.pptx')
+# open presentation from arguments
+# iterate over slides
+# extract image from slide
+# extract presenter notes from slide
+# trim presenter notes to essential information
+## Title
+## Culture / movement
+## Geographic origin
+## Artist
+## Date
+## Artistic period
+## Location
+## Significance
 
-for slide in pA.slides:
-    print("Slide "+"index"+" notes: "+slide.notes_slide.notes_text_frame.text)
+def scrape_presentation(path):
+    p = Presentation(path)
+
+    i = 0
+    for slide in p.slides:
+        #print("----------\n"+slide.notes_slide.notes_text_frame.text)
+        if i > 0:
+            open('text_test_% s.txt' % i, 'w').write(slide.notes_slide.notes_text_frame.text)
+            open('image_test_% s.jpeg' % i, 'wb').write(slide.shapes[0].image.blob)
+        i = i + 1
+
+if __name__ == '__main__':
+    globals()[sys.argv[1]](sys.argv[2])
